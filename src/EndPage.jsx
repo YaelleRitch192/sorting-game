@@ -18,8 +18,8 @@ function EndPage() {
   }, [navigate]);
 
   const handlePlayAgain = () => {
-    localStorage.setItem("started", "true");
-    navigate("/game");
+    //localStorage.setItem("started", "true");
+    navigate("/");
   };
 
   const handleSubmit = async () => {

@@ -25,7 +25,7 @@ function Leaderboard() {
 
   const handlePlayAgain = () => {
     localStorage.setItem("started", "true");
-    navigate("/game");
+    navigate("/");
   };
 
   return (
