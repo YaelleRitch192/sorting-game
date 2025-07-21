@@ -108,7 +108,6 @@ function Game() {
         textShadow: "1px 1px 3px black",
       }}
     >
-      <h1>Waste Sorting Game</h1>
       <h2>Where does this go? Click the correct bin.</h2>
 
       {/* Timer Bar */}
