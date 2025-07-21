@@ -82,7 +82,7 @@ function Game() {
       style={{
         textAlign: "center",
         marginTop: "0px",
-        backgroundImage: "url('/WasteRoom.png')",
+        backgroundImage: "url('/Airport.jpg')",
         backgroundSize: "cover",
         minHeight: "96vh",
         paddingTop: "20px",

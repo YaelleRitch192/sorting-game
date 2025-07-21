@@ -17,13 +17,23 @@ function StartPage() {
         height: "100vh",
         display: "flex",
         flexDirection: "column",
-        justifyContent: "center",
+        justifyContent: "flex-start",
         alignItems: "center",
         color: "white",
-        textShadow: "1px 1px 3px black"
+        textShadow: "1px 1px 3px black",
+        padding: "20px",
+        textAlign: "center",
+        paddingTop: "40px"
       }}
     >
-      <h1 style={{ fontSize: "64px", marginBottom: "30px" }}>Waste Sorting</h1>
+      <h1 style={{ fontSize: "64px", marginBottom: "20px" }}>Waste Sorting</h1>
+
+      <div style={{ fontSize: "20px", maxWidth: "600px", marginBottom: "30px" }}>
+        <p>🗑️ Click the bin that the item belongs in to sort it.</p>
+        <p>⏱️ You earn more points the faster you sort correctly.</p>
+        <p>✅ Try to get the highest score before time runs out!</p>
+      </div>
+
       <button
         onClick={handleStartGame}
         style={{
