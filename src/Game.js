@@ -5,12 +5,13 @@ const items = [
   { id: 1, name: "Apple Core", image: "Apple.png", category: "Compost" },
   { id: 2, name: "Plastic Bottle", image: "PlasticBottle.png", category: "Containers" },
   { id: 3, name: "Chip Bag", image: "ChipBag.png", category: "Garbage" },
-  { id: 4, name: "Newspaper", image: "Newspaper.png", category: "Paper" },
+  { id: 4, name: "Paper Pages", image: "PaperPages.png", category: "Paper" },
   { id: 5, name: "Milk Carton", image: "MilkContainer.png", category: "Containers" },
   { id: 6, name: "Paper Towel", image: "PaperTowel.png", category: "Compost" },
   { id: 7, name: "Coffee Cup", image: "CoffeeCup.png", category: "Containers" },
   { id: 8, name: "Paper Bowl", image: "Bowl.png", category: "Compost" },
   { id: 9, name: "Glass Jar", image: "GlassJar.png", category: "Containers" },
+  { id: 10, name: "Plastic Cup", image: "PlasticCup.png", category: "Containers" },
 ];
 
 function shuffleArray(array) {

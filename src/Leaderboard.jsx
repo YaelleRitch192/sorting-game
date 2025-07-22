@@ -3,18 +3,18 @@ import { supabase } from "./supabaseClient";
 import { useNavigate } from "react-router-dom";
 
 function Leaderboard() {
-  const [scores, setScores] = useState([]);
+  const [Scores, setScores] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchScores = async () => {
       const { data, error } = await supabase
-        .from("leaderboard")
+        .from("Leaderboard")
         .select("*")
-        .order("score", { ascending: false });
+        .order("Score", { ascending: false });
 
       if (error) {
-        console.error("Error fetching leaderboard:", error);
+        console.error("Error fetching Leaderboard:", error);
       } else {
         setScores(data);
       }
@@ -42,7 +42,7 @@ function Leaderboard() {
     >
       <h1 style={{ fontSize: "64px", marginBottom: "30px" }}>Leaderboard</h1>
       <div style={{ maxWidth: "500px", margin: "0 auto" }}>
-        {scores.map((player, index) => (
+        {Scores.map((player, index) => (
           <div
             key={player.name}
             style={{
@@ -56,7 +56,7 @@ function Leaderboard() {
             }}
           >
             <span>{index + 1}. {player.name}</span>
-            <span>{player.score}</span>
+            <span>{player.Score}</span>
           </div>
         ))}
       </div>

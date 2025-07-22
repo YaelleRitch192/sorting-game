@@ -5,7 +5,7 @@ import { supabase } from "./supabaseClient";
 function EndPage() {
   const navigate = useNavigate();
   const [name, setName] = useState("");
-  const [score, setScore] = useState(0);
+  const [Score, setScore] = useState(0);
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
@@ -26,7 +26,7 @@ function EndPage() {
     if (!name) return;
 
     const { data: existingPlayer, error: selectError } = await supabase
-      .from("leaderboard")
+      .from("Leaderboard")
       .select("*")
       .eq("name", name)
       .single();
@@ -37,22 +37,22 @@ function EndPage() {
     }
 
     if (existingPlayer) {
-      if (score > existingPlayer.score) {
+      if (Score > existingPlayer.Score) {
         const { error: updateError } = await supabase
-          .from("leaderboard")
-          .update({ score })
+          .from("Leaderboard")
+          .update({ Score })
           .eq("name", name);
         if (updateError) console.error("Update error:", updateError);
       }
     } else {
       const { error: insertError } = await supabase
-        .from("leaderboard")
-        .insert([{ name, score }]);
+        .from("Leaderboard")
+        .insert([{ name, Score }]);
       if (insertError) console.error("Insert error:", insertError);
     }
 
     setSubmitted(true);
-    navigate("/leaderboard");
+    navigate("/Leaderboard");
   };
 
   return (
@@ -71,7 +71,7 @@ function EndPage() {
       }}
     >
       <h1 style={{ fontSize: "64px", marginBottom: "20px" }}>Great Job!</h1>
-      <p style={{ fontSize: "24px", marginBottom: "20px" }}>Your score: {score}</p>
+      <p style={{ fontSize: "24px", marginBottom: "20px" }}>Your score: {Score}</p>
 
       {!submitted ? (
         <>
