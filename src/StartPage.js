@@ -12,7 +12,7 @@ function StartPage() {
   return (
     <div
       style={{
-        backgroundImage: "url('/Airport.jpg')",
+        backgroundImage: "url('/Green.png')",
         backgroundSize: "cover",
         height: "100vh",
         display: "flex",
@@ -23,10 +23,19 @@ function StartPage() {
         textShadow: "1px 1px 3px black",
         padding: "20px",
         textAlign: "center",
-        paddingTop: "40px"
+        paddingTop: "10px",
       }}
     >
-      <h1 style={{ fontSize: "64px", marginBottom: "20px" }}>Waste Sorting</h1>
+      {/* 🟡 Replaced title text with image */}
+      <img
+        src="/Badge.png"
+        alt="Waste Sorting Title"
+        style={{
+          width: "300px",
+          maxWidth: "90%",
+          marginBottom: "20px",
+        }}
+      />
 
       <div style={{ fontSize: "20px", maxWidth: "600px", marginBottom: "30px" }}>
         <p>🗑️ Click the bin that the item belongs in to sort it.</p>
@@ -42,8 +51,8 @@ function StartPage() {
           borderRadius: "10px",
           border: "none",
           cursor: "pointer",
-          backgroundColor: "#4CAF50",
-          color: "white"
+          backgroundColor: "#02558b",
+          color: "white",
         }}
       >
         Start Game
@@ -53,3 +62,4 @@ function StartPage() {
 }
 
 export default StartPage;
+

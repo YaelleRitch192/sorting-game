@@ -18,7 +18,6 @@ function EndPage() {
   }, [navigate]);
 
   const handlePlayAgain = () => {
-    //localStorage.setItem("started", "true");
     navigate("/");
   };
 
@@ -32,7 +31,6 @@ function EndPage() {
       .single();
 
     if (selectError && selectError.code !== "PGRST116") {
-      // Ignore "no rows returned" error (PGRST116), but log others
       console.error("Select error:", selectError);
     }
 
@@ -58,7 +56,7 @@ function EndPage() {
   return (
     <div
       style={{
-        backgroundImage: "url('/Airport.jpg')",
+        backgroundImage: "url('/Green.png')",
         backgroundSize: "cover",
         height: "100vh",
         display: "flex",
@@ -68,9 +66,86 @@ function EndPage() {
         color: "white",
         textShadow: "1px 1px 3px black",
         padding: "20px",
+        position: "relative",
+        overflow: "hidden",
       }}
     >
-      <h1 style={{ fontSize: "64px", marginBottom: "20px" }}>Great Job!</h1>
+      {/* Logo in top-right corner */}
+      <img
+        src="/Logo.png"
+        alt="Logo"
+        style={{
+          position: "absolute",
+          top: "20px",
+          right: "20px",
+          width: "120px",
+          height: "auto",
+        }}
+      />
+
+      {/* Decorative "Great Job!" with popping images */}
+      <div style={{ position: "relative", display: "inline-block", marginBottom: "20px" }}>
+        <h1 style={{ fontSize: "64px", margin: "0", position: "relative", zIndex: 1 }}>
+          Great Job!
+        </h1>
+
+        {/* Cup - top left */}
+        <img
+          src="/Cup.png"
+          alt="Cup"
+          style={{
+            position: "absolute",
+            top: "-30px",
+            left: "-60px",
+            width: "80px",
+            transform: "rotate(-20deg)",
+            filter: "drop-shadow(2px 2px 4px rgba(0,0,0,0.5))",
+          }}
+        />
+
+        {/* Bottle - top right */}
+        <img
+          src="/Bottle.png"
+          alt="Bottle"
+          style={{
+            position: "absolute",
+            top: "-40px",
+            right: "-80px",
+            width: "90px",
+            transform: "rotate(25deg)",
+            filter: "drop-shadow(2px 2px 4px rgba(0,0,0,0.5))",
+          }}
+        />
+
+        {/* Banana Sticker - bottom left */}
+        <img
+          src="/BananaSticker.png"
+          alt="Banana Sticker"
+          style={{
+            position: "absolute",
+            bottom: "-40px",
+            left: "-50px",
+            width: "70px",
+            transform: "rotate(-15deg)",
+            filter: "drop-shadow(2px 2px 4px rgba(0,0,0,0.5))",
+          }}
+        />
+
+        {/* Paper Sticker - bottom right */}
+        <img
+          src="/PaperSticker.png"
+          alt="Paper Sticker"
+          style={{
+            position: "absolute",
+            bottom: "-45px",
+            right: "-60px",
+            width: "75px",
+            transform: "rotate(15deg)",
+            filter: "drop-shadow(2px 2px 4px rgba(0,0,0,0.5))",
+          }}
+        />
+      </div>
+
       <p style={{ fontSize: "24px", marginBottom: "20px" }}>Your score: {Score}</p>
 
       {!submitted ? (
@@ -79,7 +154,7 @@ function EndPage() {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Enter your name"
+            placeholder="Enter your email"
             style={{
               fontSize: "18px",
               padding: "10px",
@@ -87,20 +162,20 @@ function EndPage() {
               border: "1px solid #ccc",
               marginBottom: "15px",
               width: "250px",
-              textAlign: "center"
+              textAlign: "center",
             }}
           />
           <button
             onClick={handleSubmit}
             style={{
-              fontSize: "20px",
-              padding: "10px 25px",
-              borderRadius: "10px",
+              fontSize: "26px",
+              padding: "15px 35px",
+              borderRadius: "12px",
               border: "none",
               cursor: "pointer",
-              backgroundColor: "#4CAF50",
+              backgroundColor: "#02558b",
               color: "white",
-              marginBottom: "20px"
+              marginBottom: "20px",
             }}
           >
             Submit Score
@@ -113,12 +188,12 @@ function EndPage() {
       <button
         onClick={handlePlayAgain}
         style={{
-          fontSize: "24px",
-          padding: "15px 30px",
+          fontSize: "22px",
+          padding: "12px 28px",
           borderRadius: "10px",
           border: "none",
           cursor: "pointer",
-          backgroundColor: "#2196F3",
+          backgroundColor: "#709BBE",
           color: "white",
         }}
       >
@@ -129,3 +204,4 @@ function EndPage() {
 }
 
 export default EndPage;
+

@@ -5,13 +5,12 @@ const items = [
   { id: 1, name: "Apple Core", image: "Apple.png", category: "Compost" },
   { id: 2, name: "Plastic Bottle", image: "PlasticBottle.png", category: "Containers" },
   { id: 3, name: "Chip Bag", image: "ChipBag.png", category: "Garbage" },
-  { id: 4, name: "Paper Pages", image: "PaperPages.png", category: "Paper" },
+  { id: 4, name: "Newspaper", image: "Newspaper.png", category: "Paper" },
   { id: 5, name: "Milk Carton", image: "MilkContainer.png", category: "Containers" },
   { id: 6, name: "Paper Towel", image: "PaperTowel.png", category: "Compost" },
   { id: 7, name: "Coffee Cup", image: "CoffeeCup.png", category: "Containers" },
   { id: 8, name: "Paper Bowl", image: "Bowl.png", category: "Compost" },
   { id: 9, name: "Glass Jar", image: "GlassJar.png", category: "Containers" },
-  { id: 10, name: "Plastic Cup", image: "PlasticCup.png", category: "Containers" },
 ];
 
 function shuffleArray(array) {
@@ -27,71 +26,73 @@ function Game() {
   const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [feedback, setFeedback] = useState("");
-  const [Score, setScore] = useState(0);
-  const [timeLeft, setTimeLeft] = useState(20);
+  const [score, setScore] = useState(0);
+
+  const [pointsLeft, setPointsLeft] = useState(100); // 👈 start at 100 for each item
   const [timerKey, setTimerKey] = useState(0);
   const [shuffledItems, setShuffledItems] = useState([]);
+  const [hasAnswered, setHasAnswered] = useState(false);
 
+  const totalTime = 20; // seconds
   const currentItem = shuffledItems[currentIndex];
 
   useEffect(() => {
-    const randomized = shuffleArray(items);
-    setShuffledItems(randomized);
+    setShuffledItems(shuffleArray(items));
   }, []);
 
+  // Timer logic with smooth decrement
   useEffect(() => {
-    setTimeLeft(20);
-    const interval = setInterval(() => {
-      setTimeLeft((prev) => {
-        if (prev <= 1) {
-          clearInterval(interval);
-          setFeedback(`⏰ Time's up! It goes in ${currentItem.category}`);
-          setTimeout(() => {
-            setFeedback("");
-            setCurrentIndex((prevIndex) => {
-              if (prevIndex + 1 < shuffledItems.length) {
-                return prevIndex + 1;
-              } else {
-                localStorage.setItem("Score", Score);
-                navigate("/end");
-                return prevIndex;
-              }
-            });
-          }, 1000);
-          return 0;
-        }
-        return prev - 1;
-      });
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [timerKey, currentItem?.category, shuffledItems.length, navigate, Score]);
+    setPointsLeft(100);
+    setHasAnswered(false);
+
+    const startTime = Date.now();
+    const timer = setInterval(() => {
+      const elapsed = (Date.now() - startTime) / 1000;
+      const fractionElapsed = elapsed / totalTime;
+      const newPoints = Math.max(0, 100 - fractionElapsed * 100);
+      setPointsLeft(newPoints);
+
+      if (elapsed >= totalTime) {
+        clearInterval(timer);
+        setFeedback(`⏰ Time's up! It goes in ${currentItem?.category}`);
+        setTimeout(nextItem, 1000);
+      }
+    }, 50); // 👈 smoother updates (20x per second)
+
+    return () => clearInterval(timer);
+  }, [timerKey, currentItem]);
 
   useEffect(() => {
     const started = localStorage.getItem("started");
-    if (!started) {
-      navigate("/");
-    }
+    if (!started) navigate("/");
   }, [navigate]);
 
+  const nextItem = () => {
+    const nextIndex = currentIndex + 1;
+    if (nextIndex < shuffledItems.length) {
+      setCurrentIndex(nextIndex);
+      setTimerKey((prev) => prev + 1);
+      setFeedback("");
+    } else {
+      localStorage.setItem("Score", Math.round(score));
+      navigate("/end");
+    }
+  };
+
   const handleSort = (category) => {
+    if (hasAnswered) return;
+
+    setHasAnswered(true);
+
     if (category === currentItem.category) {
-      setFeedback(`✅ Correct! +${timeLeft} points`);
-      setScore(Score + timeLeft);
+      const earned = Math.round(pointsLeft);
+      setFeedback(`✅ Correct! +${earned} points`);
+      setScore((prev) => prev + earned);
     } else {
       setFeedback(`❌ Oops! It goes in ${currentItem.category}`);
     }
 
-    setTimeout(() => {
-      setFeedback("");
-      const nextIndex = currentIndex + 1;
-      if (nextIndex < shuffledItems.length) {
-        setCurrentIndex(nextIndex);
-        setTimerKey((prev) => prev + 1);
-      } else {
-        localStorage.setItem("Score", Score);
-        navigate("/end");
-      }
-    }, 1000);
+    setTimeout(nextItem, 1000);
   };
 
   if (!currentItem) return null;
@@ -100,8 +101,7 @@ function Game() {
     <div
       style={{
         textAlign: "center",
-        marginTop: "0px",
-        backgroundImage: "url('/Sky.jpg')",
+        backgroundImage: "url('/Green.png')",
         backgroundSize: "cover",
         minHeight: "96vh",
         paddingTop: "20px",
@@ -109,7 +109,8 @@ function Game() {
         textShadow: "1px 1px 3px black",
       }}
     >
-      <h2>Where does this go? Click the correct bin.</h2>
+      
+      <h1>Where does this go? Click the correct bin.</h1>
 
       {/* Timer Bar */}
       <div
@@ -125,9 +126,9 @@ function Game() {
         <div
           style={{
             height: "100%",
-            width: `${(timeLeft / 20) * 100}%`,
-            backgroundColor: "#4CAF50",
-            transition: "width 0.2s linear", // quick fill reset
+            width: `${(pointsLeft / 100) * 100}%`,
+            backgroundColor: "#02558b",
+            transition: "width 0.05s linear", // 👈 smoother animation
           }}
         />
       </div>
@@ -146,36 +147,28 @@ function Game() {
           flexWrap: "wrap",
         }}
       >
-        <img
-          src="/compost.png"
-          alt="Compost"
-          onClick={() => handleSort("Compost")}
-          style={{ width: "150px", cursor: "pointer" }}
-        />
-        <img
-          src="/containers.png"
-          alt="Containers"
-          onClick={() => handleSort("Containers")}
-          style={{ width: "150px", cursor: "pointer" }}
-        />
-        <img
-          src="/garbage.png"
-          alt="Garbage"
-          onClick={() => handleSort("Garbage")}
-          style={{ width: "150px", cursor: "pointer" }}
-        />
-        <img
-          src="/paper.png"
-          alt="Paper"
-          onClick={() => handleSort("Paper")}
-          style={{ width: "150px", cursor: "pointer" }}
-        />
+        {["Compost", "Containers", "Garbage", "Paper"].map((cat) => (
+          <img
+            key={cat}
+            src={`/${cat.toLowerCase()}.png`}
+            alt={cat}
+            onClick={() => handleSort(cat)}
+            style={{
+              width: "150px",
+              cursor: hasAnswered ? "not-allowed" : "pointer",
+              opacity: hasAnswered ? 0.5 : 1,
+            }}
+          />
+        ))}
       </div>
 
       {feedback && <p>{feedback}</p>}
-      <p>Score: {Score}</p>
+      <p>Score: {Math.round(score)}</p>
     </div>
   );
 }
 
 export default Game;
+
+
+
