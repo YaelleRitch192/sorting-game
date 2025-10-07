@@ -27,8 +27,7 @@ function Game() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [feedback, setFeedback] = useState("");
   const [score, setScore] = useState(0);
-
-  const [pointsLeft, setPointsLeft] = useState(100); // 👈 start at 100 for each item
+  const [pointsLeft, setPointsLeft] = useState(100);
   const [timerKey, setTimerKey] = useState(0);
   const [shuffledItems, setShuffledItems] = useState([]);
   const [hasAnswered, setHasAnswered] = useState(false);
@@ -57,7 +56,7 @@ function Game() {
         setFeedback(`⏰ Time's up! It goes in ${currentItem?.category}`);
         setTimeout(nextItem, 1000);
       }
-    }, 50); // 👈 smoother updates (20x per second)
+    }, 50);
 
     return () => clearInterval(timer);
   }, [timerKey, currentItem]);
@@ -103,22 +102,34 @@ function Game() {
         textAlign: "center",
         backgroundImage: "url('/Green.png')",
         backgroundSize: "cover",
-        minHeight: "96vh",
-        paddingTop: "20px",
+        backgroundPosition: "center",
+        minHeight: "100vh",
+        padding: "4vw 2vw",
         color: "white",
         textShadow: "1px 1px 3px black",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "flex-start",
       }}
     >
-      
-      <h1>Where does this go? Click the correct bin.</h1>
+      <h1
+        style={{
+          fontSize: "clamp(20px, 4vw, 48px)",
+          marginBottom: "2vw",
+          maxWidth: "800px",
+        }}
+      >
+        Where does this go? Click the correct bin.
+      </h1>
 
       {/* Timer Bar */}
       <div
         style={{
-          height: "20px",
+          height: "clamp(10px, 1.5vw, 20px)",
           width: "80%",
-          backgroundColor: "#ddd",
-          margin: "0 auto 20px",
+          backgroundColor: "rgba(255,255,255,0.5)",
+          margin: "0 auto 3vw",
           borderRadius: "10px",
           overflow: "hidden",
         }}
@@ -128,23 +139,32 @@ function Game() {
             height: "100%",
             width: `${(pointsLeft / 100) * 100}%`,
             backgroundColor: "#02558b",
-            transition: "width 0.05s linear", // 👈 smoother animation
+            transition: "width 0.05s linear",
           }}
         />
       </div>
 
+      {/* Item image */}
       <img
         src={`/${currentItem.image}`}
         alt={currentItem.name}
-        style={{ width: "200px", height: "150px", margin: "20px" }}
+        style={{
+          width: "clamp(150px, 25vw, 300px)",
+          height: "auto",
+          margin: "2vw",
+          maxHeight: "40vh",
+          objectFit: "contain",
+        }}
       />
 
+      {/* Category buttons */}
       <div
         style={{
           display: "flex",
           justifyContent: "center",
-          gap: "20px",
+          gap: "2vw",
           flexWrap: "wrap",
+          maxWidth: "800px",
         }}
       >
         {["Compost", "Containers", "Garbage", "Paper"].map((cat) => (
@@ -154,21 +174,38 @@ function Game() {
             alt={cat}
             onClick={() => handleSort(cat)}
             style={{
-              width: "150px",
+              width: "clamp(100px, 15vw, 180px)",
               cursor: hasAnswered ? "not-allowed" : "pointer",
               opacity: hasAnswered ? 0.5 : 1,
+              transition: "transform 0.2s",
             }}
+            onMouseEnter={(e) => (e.target.style.transform = "scale(1.05)")}
+            onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
           />
         ))}
       </div>
 
-      {feedback && <p>{feedback}</p>}
-      <p>Score: {Math.round(score)}</p>
+      {feedback && (
+        <p
+          style={{
+            fontSize: "clamp(16px, 2vw, 28px)",
+            marginTop: "2vw",
+            maxWidth: "600px",
+          }}
+        >
+          {feedback}
+        </p>
+      )}
+      <p
+        style={{
+          fontSize: "clamp(16px, 2vw, 24px)",
+          marginTop: "1vw",
+        }}
+      >
+        Score: {Math.round(score)}
+      </p>
     </div>
   );
 }
 
 export default Game;
-
-
-

@@ -14,6 +14,7 @@ function StartPage() {
       style={{
         backgroundImage: "url('/Green.png')",
         backgroundSize: "cover",
+        backgroundPosition: "center",
         height: "100vh",
         display: "flex",
         flexDirection: "column",
@@ -21,23 +22,26 @@ function StartPage() {
         alignItems: "center",
         color: "white",
         textShadow: "1px 1px 3px black",
-        padding: "20px",
+        padding: "5vw 20px",  // added some responsive top padding
         textAlign: "center",
-        paddingTop: "10px",
       }}
     >
-      {/* 🟡 Replaced title text with image */}
-      <img
-        src="/Badge.png"
-        alt="Waste Sorting Title"
+      <h1
         style={{
-          width: "300px",
-          maxWidth: "90%",
-          marginBottom: "20px",
+          fontSize: "clamp(32px, 6vw, 80px)", // responsive font size
+          marginBottom: "2vw",
         }}
-      />
+      >
+        Waste Sorting
+      </h1>
 
-      <div style={{ fontSize: "20px", maxWidth: "600px", marginBottom: "30px" }}>
+      <div
+        style={{
+          fontSize: "clamp(16px, 2vw, 24px)",
+          maxWidth: "600px",
+          marginBottom: "3vw",
+        }}
+      >
         <p>🗑️ Click the bin that the item belongs in to sort it.</p>
         <p>⏱️ You earn more points the faster you sort correctly.</p>
         <p>🏆 Try to get the highest score to earn a prize!</p>
@@ -46,14 +50,18 @@ function StartPage() {
       <button
         onClick={handleStartGame}
         style={{
-          fontSize: "24px",
-          padding: "15px 30px",
+          fontSize: "clamp(18px, 2.5vw, 28px)",
+          padding: "1vw 2vw",
           borderRadius: "10px",
           border: "none",
           cursor: "pointer",
           backgroundColor: "#02558b",
           color: "white",
+          boxShadow: "0 4px 6px rgba(0,0,0,0.3)",
+          transition: "transform 0.2s",
         }}
+        onMouseEnter={(e) => (e.target.style.transform = "scale(1.05)")}
+        onMouseLeave={(e) => (e.target.style.transform = "scale(1)")}
       >
         Start Game
       </button>
@@ -62,4 +70,5 @@ function StartPage() {
 }
 
 export default StartPage;
+
 

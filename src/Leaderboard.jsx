@@ -33,12 +33,16 @@ function Leaderboard() {
       style={{
         backgroundImage: "url('/Green.png')",
         backgroundSize: "cover",
+        backgroundPosition: "center",
         minHeight: "100vh",
         color: "white",
         textAlign: "center",
-        paddingTop: "50px",
+        paddingTop: "40px",
         textShadow: "1px 1px 3px black",
-        position: "relative", // needed for logo & images positioning
+        position: "relative",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
       }}
     >
       {/* Logo in top-right corner */}
@@ -49,14 +53,28 @@ function Leaderboard() {
           position: "absolute",
           top: "20px",
           right: "20px",
-          width: "120px",
+          width: "clamp(80px, 10vw, 130px)",
           height: "auto",
         }}
       />
 
       {/* Leaderboard Title with popping images */}
-      <div style={{ position: "relative", display: "inline-block", marginBottom: "30px" }}>
-        <h1 style={{ fontSize: "64px", margin: "0" }}>Leaderboard</h1>
+      <div
+        style={{
+          position: "relative",
+          display: "inline-block",
+          marginBottom: "30px",
+        }}
+      >
+        <h1
+          style={{
+            fontSize: "clamp(40px, 6vw, 64px)",
+            margin: "0",
+            lineHeight: 1.1,
+          }}
+        >
+          Leaderboard
+        </h1>
 
         {/* Fun angled images */}
         <img
@@ -64,9 +82,9 @@ function Leaderboard() {
           alt="Cup"
           style={{
             position: "absolute",
-            top: "-30px",
-            left: "-70px",
-            width: "60px",
+            top: "-40px",
+            left: "-80px",
+            width: "clamp(40px, 5vw, 70px)",
             transform: "rotate(-20deg)",
           }}
         />
@@ -75,9 +93,9 @@ function Leaderboard() {
           alt="Bottle"
           style={{
             position: "absolute",
-            top: "-40px",
-            right: "-70px",
-            width: "60px",
+            top: "-50px",
+            right: "-80px",
+            width: "clamp(40px, 5vw, 70px)",
             transform: "rotate(15deg)",
           }}
         />
@@ -86,9 +104,9 @@ function Leaderboard() {
           alt="Banana"
           style={{
             position: "absolute",
-            bottom: "-40px",
-            left: "-60px",
-            width: "50px",
+            bottom: "-50px",
+            left: "-70px",
+            width: "clamp(35px, 4vw, 60px)",
             transform: "rotate(10deg)",
           }}
         />
@@ -97,16 +115,16 @@ function Leaderboard() {
           alt="Paper"
           style={{
             position: "absolute",
-            bottom: "-40px",
-            right: "-60px",
-            width: "50px",
+            bottom: "-50px",
+            right: "-70px",
+            width: "clamp(35px, 4vw, 60px)",
             transform: "rotate(-15deg)",
           }}
         />
       </div>
 
       {/* Score List */}
-      <div style={{ maxWidth: "500px", margin: "0 auto" }}>
+      <div style={{ maxWidth: "500px", width: "90%", margin: "0 auto" }}>
         {Scores.map((player, index) => (
           <div
             key={player.name}
@@ -115,7 +133,7 @@ function Leaderboard() {
               margin: "10px 0",
               padding: "10px 20px",
               borderRadius: "10px",
-              fontSize: "24px",
+              fontSize: "clamp(18px, 2.5vw, 24px)",
               display: "flex",
               justifyContent: "space-between",
             }}
@@ -132,7 +150,7 @@ function Leaderboard() {
       <button
         onClick={handlePlayAgain}
         style={{
-          fontSize: "24px",
+          fontSize: "clamp(18px, 2.5vw, 24px)",
           padding: "15px 30px",
           borderRadius: "10px",
           border: "none",
@@ -149,3 +167,4 @@ function Leaderboard() {
 }
 
 export default Leaderboard;
+
