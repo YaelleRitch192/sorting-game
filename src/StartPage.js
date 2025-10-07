@@ -26,14 +26,13 @@ function StartPage() {
         textAlign: "center",
       }}
     >
-      <h1
+      <img
+        src="/Badge.png"
         style={{
-          fontSize: "clamp(32px, 6vw, 80px)", // responsive font size
+          width: "clamp(200px, 40vw, 600px)",
           marginBottom: "2vw",
         }}
-      >
-        Waste Sorting
-      </h1>
+      />
 
       <div
         style={{
