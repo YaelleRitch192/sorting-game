@@ -177,7 +177,7 @@ function EndPage() {
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
-            placeholder="Enter your email"
+            placeholder="Enter your Name & Dept. Abbreviation"
             style={{
               fontSize: "clamp(16px, 2.5vw, 20px)",
               padding: "10px",
